@@ -127,6 +127,8 @@ async function bootstrap() {
 
   const httpServer = configService.get<HttpServer>('SERVER');
 
+  const port = process.env.PORT ? Number(process.env.PORT) : httpServer.PORT;
+
   ServerUP.app = app;
   let server = ServerUP[httpServer.TYPE];
 
@@ -148,7 +150,7 @@ async function bootstrap() {
     Sentry.setupExpressErrorHandler(app);
   }
 
-  server.listen(httpServer.PORT, () => logger.log(httpServer.TYPE.toUpperCase() + ' - ON: ' + httpServer.PORT));
+  server.listen(port, () => logger.log(httpServer.TYPE.toUpperCase() + ' - ON: ' + port));
 
   initWA();
 
